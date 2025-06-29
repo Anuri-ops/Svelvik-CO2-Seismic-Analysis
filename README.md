@@ -92,7 +92,7 @@ This analysis confirms seismic responses related to CO₂ plume migration using 
 ##  Author
 
 **Anuri Nwagbara**  
-Geoscientist | Reservoir & Process Engineering  
+ Reservoir & Process Engineer  
 
 
 ---
