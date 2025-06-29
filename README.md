@@ -11,7 +11,7 @@ Our goal is to detect and interpret CO₂-related changes using waveform charact
 
 ---
 
-## 🎯 Objective
+##  Objective
 
 To detect and interpret plume-related changes in:
 - Waveform shape and amplitude
@@ -20,7 +20,7 @@ To detect and interpret plume-related changes in:
 
 ---
 
-## 🧠 Methodology
+##  Methodology
 
 We follow a structured pipeline:
 
@@ -30,7 +30,7 @@ Files → Inspect → Clean → Compare (Baseline vs Injection) → Interpret (P
 
 ---
 
-## 📊 Key Findings
+##  Key Findings
 
 ### Amplitude Envelope Comparison
 
@@ -53,7 +53,7 @@ These patterns suggest saturation or gas presence in the plume-affected region.
 
 ---
 
-## 🧪 Tools & Libraries
+##  Tools & Libraries
 
 - Python 3
 - [`ObsPy`](https://github.com/obspy/obspy) – for SEG-2 handling and signal filtering
@@ -61,7 +61,7 @@ These patterns suggest saturation or gas presence in the plume-affected region.
 
 ---
 
-## 💡 Usage
+##  Usage
 
 To reproduce this project:
 
@@ -74,7 +74,7 @@ To reproduce this project:
 
 ---
 
-## 📁 Dataset
+##  Dataset
 
 **Source**: Svelvik CO₂ Field Lab – ECCSEL research site  
 **Data**: SEG-2 files (Baseline, Injection, Post-injection)  
@@ -83,17 +83,17 @@ To reproduce this project:
 
 ---
 
-## 📌 Summary
+##  Summary
 
 This analysis confirms seismic responses related to CO₂ plume migration using envelope comparison and waveform inspection. It provides a foundation for future MMV tools in shallow injection sites.
 
 ---
 
-## 👤 Author
+##  Author
 
 **Anuri Nwagbara**  
 Geoscientist | Reservoir & Process Engineering  
-[LinkedIn](https://linkedin.com/in/anurinwagbara)
+
 
 ---
 
