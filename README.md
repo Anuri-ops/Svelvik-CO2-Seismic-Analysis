@@ -49,7 +49,7 @@ Overlaying traces reveals:
 
 These patterns suggest saturation or gas presence in the plume-affected region.
 
-![Multi-Trace Overlay](images/overlay_traces.png)
+![Multi-Trace Overlay](images/multi_trace_overlay.png)
 
 ---
 
