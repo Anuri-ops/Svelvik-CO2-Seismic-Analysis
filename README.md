@@ -87,8 +87,6 @@ To reproduce this project:
 
 This analysis confirms seismic responses related to CO₂ plume migration using envelope comparison and waveform inspection. It provides a foundation for future MMV tools in shallow injection sites.
 
-
-Explore the full analysis in [Svelvik_CO2_Seismic_Analysis.ipynb](Svelvik_CO2_Seismic_Analysis.ipynb)
 ---
 
 ##  Author
