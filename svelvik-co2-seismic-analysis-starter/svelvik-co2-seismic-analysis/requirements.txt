@@ -1,6 +1,0 @@
-obspy
-numpy
-matplotlib
-seaborn
-scipy
-ipynb
