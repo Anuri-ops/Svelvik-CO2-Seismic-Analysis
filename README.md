@@ -8,7 +8,7 @@ It supports the open science goals of **IEAGHG CO₂ DataShare**, providing a re
 
 ---
 
-## 🎯 Objective
+##  Objective
 
 To identify and interpret time-lapse changes in seismic responses caused by CO₂ plume migration, focusing on:
 
@@ -18,7 +18,7 @@ To identify and interpret time-lapse changes in seismic responses caused by CO�
 
 ---
 
-## 🧠 Methodology
+##  Methodology
 
 We follow a structured workflow:
 
@@ -34,9 +34,9 @@ The analysis compares signals from three monitoring stages:
 
 ---
 
-## 🔍 Key Findings
+##  Key Findings
 
-### 🔸 Amplitude Envelope Comparison
+###  Amplitude Envelope Comparison
 
 Post-injection waveforms show **reduced signal energy**, consistent with scattering and absorption by the migrating CO₂ plume.
 
@@ -44,7 +44,7 @@ Post-injection waveforms show **reduced signal energy**, consistent with scatter
 
 ---
 
-### 🔸 Multi-Trace Overlay
+###  Multi-Trace Overlay
 
 Overlaying seismic traces reveals:
 
@@ -58,7 +58,7 @@ These observations are consistent with plume presence and changes in pore satura
 
 ---
 
-## ⚒️ Tools & Libraries
+##  Tools & Libraries
 
 - `ObsPy` – for SEG-2 handling and signal filtering
 - `NumPy`, `Matplotlib`, `Seaborn` – for numerical processing and visualization
@@ -66,7 +66,7 @@ These observations are consistent with plume presence and changes in pore satura
 
 ---
 
-## 📦 Dataset
+##  Dataset
 
 **Source**: Svelvik CO₂ Field Lab – ECCSEL Research Site  
 **Format**: SEG-2 seismic files (Baseline, Injection, Post-injection)
@@ -76,7 +76,7 @@ These observations are consistent with plume presence and changes in pore satura
 
 ---
 
-## 🔄 Potential Applications
+##  Potential Applications
 
 - CCS monitoring and plume detection workflows  
 - Educational demos for time-lapse seismic analysis  
@@ -85,7 +85,7 @@ These observations are consistent with plume presence and changes in pore satura
 
 ---
 
-## 🚀 Usage
+##  Usage
 
 To reproduce this analysis:
 
@@ -98,22 +98,15 @@ To reproduce this analysis:
 
 ---
 
-## 📌 Summary
+##  Summary
 
 This project demonstrates a Python-based, reproducible analysis of seismic signals during CO₂ injection.  
 It confirms time-lapse effects consistent with plume behavior and provides an early-stage template for **CCS MMV tools** or applied signal analysis in research settings.
 
 ---
 
-## 👤 Author
+##  Author
 
 **Anuri Nwagbara**  
 Reservoir & Process Engineer  
-🔗 [LinkedIn](https://www.linkedin.com/in/anuri-nwagbara/)  
-📫 GitHub: [@your-github](https://github.com/your-github)
 
----
-
-## 📄 License
-
-This project is released under the MIT License.
