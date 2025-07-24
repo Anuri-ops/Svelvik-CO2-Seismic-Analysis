@@ -32,6 +32,9 @@ The analysis compares signals from three monitoring stages:
 - **Injection-phase data**
 - **Post-injection data**
 
+This analysis used full trace data from each monitoring phase as provided. No explicit spatial filtering or plume-zone segmentation was applied.
+
+
 ---
 
 ##  Key Findings
