@@ -32,8 +32,6 @@ The analysis compares signals from three monitoring stages:
 - **Injection-phase data**
 - **Post-injection data**
 
-This analysis used full trace data from each monitoring phase as provided. No explicit spatial filtering or plume-zone segmentation was applied.
-
 
 ---
 
@@ -76,6 +74,9 @@ These observations are consistent with plume presence and changes in pore satura
 
 **Acknowledgment**:  
 > *We gratefully acknowledge SINTEF, the ECCSEL Svelvik CO₂ Field Lab, and the Pre-ACT project (RCN project number 271496) for access to the dataset.*
+
+This analysis used full trace data from each monitoring phase as provided. No explicit spatial filtering or plume-zone segmentation was applied.
+
 
 ---
 
