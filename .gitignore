@@ -1,19 +1,7 @@
-# Local Svelvik data (licensed separately)
-data/
-*.sg2
-*.seg2
-*.SG2
-*.SEG2
+# MATLAB autosave / temporary files
+*.asv
+*.m~
 
-# Python / Jupyter
-__pycache__/
-*.py[cod]
-.ipynb_checkpoints/
-.venv/
-venv/
-
-# OS / editor
+# OS files
 .DS_Store
 Thumbs.db
-.vscode/
-.idea/

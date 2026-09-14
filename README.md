@@ -1,114 +1,146 @@
-# Svelvik CO₂ Time-Lapse Seismic Analysis
+# CO₂ Injection Simulation – Synthetic Oil Reservoir
 
-Exploratory **signal-level comparison of cross-well SEG-2 seismic data** acquired before, during, and after the 2019 CO₂ injection campaign at the Svelvik CO₂ Field Lab.
+This project simulates **gas injection represented as CO₂ into a 2D synthetic oil reservoir** using the MATLAB Reservoir Simulation Toolbox (MRST). It tracks the gas-saturation front over time and serves as a simple base case for gas-injection / enhanced-oil-recovery (EOR) workflow practice.
 
-The project focuses on reproducible data handling and comparison of matched source–receiver geometries using Python and ObsPy. It does **not** perform seismic inversion, tomography, plume segmentation, or quantitative CO₂ saturation estimation.
-
-## Scope
-
-The workflow:
-
-- loads SEG-2 records from the baseline, injection, and post-injection surveys;
-- removes flat traces;
-- matches traces by SEG-2 source/receiver metadata before comparison;
-- applies an illustrative 10–100 Hz band-pass filter and per-trace normalisation;
-- compares normalised waveform shape and amplitude-envelope shape;
-- calculates an automatic STA/LTA first-arrival pick for an example matched geometry;
-- overlays matched traces across monitoring phases.
-
-### Important interpretation boundary
-
-The analysis is **exploratory**. Differences between monitoring phases are observations in the processed seismic records; they are not, by themselves, proof that a specific difference was caused by the CO₂ plume.
-
-Two points are especially important:
-
-1. **Per-trace normalisation removes absolute-amplitude information.** The envelope plots can be used to compare waveform/envelope shape, but not to claim quantitative energy loss or attenuation.
-2. The example SEG-2 metadata in the original run show different stack counts between phases (baseline: 4; injection/post-injection: 8). Acquisition and processing differences therefore need to be controlled before attributing amplitude or arrival-time changes to subsurface CO₂.
-
-The 10–100 Hz band used here is retained from the original exploratory workflow and should be treated as an analysis choice rather than a calibrated acquisition band. A research-grade interpretation should first inspect the survey documentation and spectral content and justify the filter.
+> **Scope note:** this is an oil-filled reservoir with a three-phase water–oil–gas formulation, not a saline-aquifer CO₂ storage model. The injected gas is represented with fixed fluid properties in an immiscible black-oil formulation. CO₂–brine dissolution, residual trapping, structural trapping, compositional effects and geochemical reactions are not modelled.
 
 ---
 
-## Dataset
+## Objective
 
-**Dataset:** *Svelvik CO₂ Field Lab cross-well data 2019*  
-**Format:** SEG-2 / SG2 cross-well seismic data  
-**Monitoring phases:** baseline, during injection, post-injection  
-**DOI:** `10.11582/2025.00062`
+To build practical familiarity with:
 
-The dataset was acquired during the **Pre-ACT** project at the **Svelvik CO₂ Field Lab** and is distributed through **CO2DataShare**. SINTEF is listed as the contributing organisation, and the field laboratory is part of the ECCSEL research infrastructure.
-
-The raw dataset is **not included in this repository**. Users must obtain it from the dataset provider and comply with the **SVELVIK 2019 DATASET LICENSE**.
-
-The Apache-2.0 licence in this repository applies to the repository code/documentation only; it does not replace or modify the dataset licence.
+- Numerical reservoir simulation in MRST
+- Three-phase black-oil formulations
+- Injector / producer well controls
+- Saturation-front visualisation
+- Reproducible simulation setup in MATLAB
 
 ---
 
-## Repository structure
+## Tools and Framework
 
-```text
-.
-├── README.md
-├── Svelvik_CO2_Seismic_Analysis.ipynb
-├── requirements.txt
-├── .gitignore
-├── LICENSE
-└── images/
-    ├── amplitude_envelope.png
-    └── multi_trace_overlay.png
+- **MRST version:** 2025a
+- **Modules:** `ad-core`, `ad-blackoil`, `mrst-gui`
+- **Model:** `ThreePhaseBlackOilModel`
+- **Simulation engine:** `simulateScheduleAD`
+- **Language:** MATLAB
+
+---
+
+## Model Setup
+
+| Parameter | Value |
+|---|---|
+| Grid | 60 × 40 cells |
+| Domain | 600 × 400 m |
+| Cell size | 10 × 10 m |
+| Porosity | 0.20, homogeneous |
+| Permeability | 100 mD, homogeneous |
+| Initial pressure | 100 bar |
+| Initial saturation | 100% oil (`Sw = 0, So = 1, Sg = 0`) |
+
+---
+
+## Fluids
+
+The model uses `initSimpleADIFluid` with three phases and quadratic relative-permeability exponents (`n = [2, 2, 2]`).
+
+| Phase | Viscosity (cP) | Density (kg/m³) |
+|---|---:|---:|
+| Water | 1 | 1000 |
+| Oil | 5 | 700 |
+| Gas (CO₂ proxy) | 0.05 | 600 |
+
+These are simplified constant properties for a learning model, not a calibrated CO₂ PVT description.
+
+---
+
+## Well Configuration
+
+The wells are placed using explicit logical-to-linear cell indexing with `sub2ind`:
+
+- **Injector:** logical cell `(1, 1)` — lower-left corner
+  - Rate-controlled at 100 m³/day
+  - Injected composition: 100% gas
+- **Producer:** logical cell `(60, 40)` — opposite corner
+  - BHP-controlled at 50 bar
+
+Using explicit linear cell indices avoids ambiguity when passing well locations to `addWell`.
+
+---
+
+## Simulation Details
+
+- Total simulated time: 100 days
+- 10 timesteps of 10 days
+- Gas saturation displayed at each timestep
+
+Key setup:
+
+```matlab
+nx = 60;
+ny = 40;
+
+injCell  = sub2ind([nx, ny], 1, 1);
+prodCell = sub2ind([nx, ny], nx, ny);
+
+state0 = initResSol(G, 100*barsa, [0 1 0]);
+
+model = ThreePhaseBlackOilModel(G, rock, fluid, 'gas', true);
+
+[wellSols, states] = simulateScheduleAD(state0, model, schedule);
 ```
 
-Place locally obtained SEG-2 data under:
+---
+
+## Result
+
+The workflow visualises the evolution of gas saturation through the 100-day simulation.
+
+The final-timestep image should be regenerated after running the corrected script. The script saves it as:
 
 ```text
-data/
-├── Baseline_data_2019/
-├── CO2_injection_data_2019/
-└── Post_Injection_data_2019/
+images/co2_saturation_t10.png
 ```
-
-The `data/` directory and SEG-2 files are ignored by Git.
 
 ---
 
-## Example outputs
+## How to Run
 
-### Normalised amplitude-envelope comparison
-
-![Amplitude envelope comparison](images/amplitude_envelope.png)
-
-This figure shows **shape differences after per-trace normalisation**. It must not be interpreted as a quantitative comparison of absolute signal energy or attenuation.
-
-### Matched-trace overlay
-
-![Multi-trace overlay](images/multi_trace_overlay.png)
-
-The overlay visualises differences in normalised waveform shape and relative timing across monitoring phases. The corrected notebook matches source/receiver metadata before building the comparison.
+1. Install MRST 2025a.
+2. Place this repository somewhere writable.
+3. Run `CO2InjectionSimulation.m`.
+4. The script loads the required MRST modules, runs the schedule, displays the gas-saturation evolution and saves the final-timestep figure in `images/`.
 
 ---
 
 ## Limitations
 
-- No seismic inversion or tomography
-- No plume-zone segmentation
-- No velocity-model update
-- No quantitative CO₂ saturation or plume-volume estimate
-- No causal attribution of individual signal changes to CO₂
-- Automatic first-arrival picks are illustrative and require manual/QC validation
-- Per-trace normalisation prevents absolute-amplitude comparison
-- Acquisition settings, stack counts, geometry and processing choices must be controlled before physical interpretation
-- The 10–100 Hz filter is exploratory and has not been presented as an acquisition-calibrated band
+- Homogeneous rock properties; no heterogeneity, layering or faults
+- Immiscible black-oil treatment
+- Fixed simplified fluid properties rather than calibrated CO₂ PVT behaviour
+- No CO₂ dissolution into brine or oil
+- No capillary pressure, hysteresis or residual trapping
+- No compositional or miscibility effects
+- No geomechanics, thermal effects or geochemical reactions
+- Simple quadratic relative permeability rather than measured curves
+- Qualitative saturation-front analysis only
+- No history matching, uncertainty quantification, sweep-efficiency calculation or storage-capacity estimate
 
 ---
 
-## Possible extensions
+## Purpose
 
-- Spectral analysis with a survey-justified processing band
-- Manual/QC validation of first-arrival picks
-- Travel-time tomography
-- Full waveform or other inversion methods
-- Geometry-aware time-lapse differencing
-- Uncertainty analysis and repeatability assessment
+This is a **project-level reservoir-simulation exercise** built to develop practical MRST workflow competence. It is not presented as a calibrated field model or research result.
+
+Possible extensions include:
+
+- Heterogeneous permeability and porosity fields
+- Recovery-factor and sweep-efficiency tracking
+- Water-alternating-gas scheduling
+- A separate brine-filled storage case with appropriate CO₂–brine physics
+- Sensitivity analysis and uncertainty assessment
 
 ---
 
